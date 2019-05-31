@@ -1,11 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite thread-count="1" verbose="1" name="Main Test Suite" annotations="JDK" parallel="tests">
-
-    <test name="mainTest">
+<suite name="MainSuite" verbose="5" >
+    <test name="Main">
         <classes>
             <class name="com.botmasterzzz.autotest.MainTestClass"/>
         </classes>
     </test>
-
 </suite>
