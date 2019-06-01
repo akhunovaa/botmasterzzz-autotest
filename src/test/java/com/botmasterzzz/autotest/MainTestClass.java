@@ -1,52 +1,34 @@
 package com.botmasterzzz.autotest;
 
-import com.botmasterzzz.autotest.helpers.ApplicationManager;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.*;
-
-import java.io.File;
-import java.io.IOException;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MainTestClass extends TestBase{
 
-    //private static ChromeDriverService service;
     private WebDriver driver;
 
+    @BeforeClass
+    public static void setupClass() {
+        WebDriverManager.chromedriver().setup();
+    }
+
     @BeforeTest
-    public static void createAndStartService() throws IOException {
-//        service = new ChromeDriverService.Builder()
-//                .usingDriverExecutable(new File("/usr/bin/chromedriver"))
-//                .usingAnyFreePort()
-//                .build();
-//        service.start();
+    public void setupTest() {
+        driver = new ChromeDriver();
     }
 
     @AfterTest
-    public static void createAndStopService() {
-       // service.stop();
-    }
-
-
-    @BeforeClass
-    public void createDriver() {
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
-    }
-
-    @AfterClass
-    public void quitDriver() {
-        driver.quit();
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Test
