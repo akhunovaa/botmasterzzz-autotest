@@ -13,6 +13,5 @@ public class MainTestClass extends TestBase{
         WebDriver driver = applicationManager.getWebDriver();
         driver.navigate().to("https://botmasterzzz.com");
         assertThat(String.format("Заголовок главной страницы не соответствует '%s'", title), title.equals(driver.getTitle()));
-        driver.close();
     }
 }
