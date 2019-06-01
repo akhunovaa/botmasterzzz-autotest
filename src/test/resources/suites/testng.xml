@@ -3,7 +3,7 @@
 <suite name="MainSuite" verbose="10" >
     <test name="Main">
         <classes>
-            <class name="com.botmasterzzz.autotest.MainTestClass"/>
+            <class name="com.botmasterzzz.autotest.FirefoxTest"/>
         </classes>
     </test>
 </suite>
