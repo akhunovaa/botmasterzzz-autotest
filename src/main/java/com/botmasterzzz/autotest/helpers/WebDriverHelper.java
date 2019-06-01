@@ -60,14 +60,10 @@ public class WebDriverHelper {
      * @throws IOException
      */
     private ChromeDriver getChromeDriver() throws IOException {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/linux/chromedriver");
-        File chromeDriver = new File("src/test/resources/linux/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+        File chromeDriver = new File("/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         ChromeDriver driver = new ChromeDriver(options);
         ChromeDriverService service = new ChromeDriverService.Builder()
