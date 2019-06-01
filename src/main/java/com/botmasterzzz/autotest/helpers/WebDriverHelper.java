@@ -142,7 +142,6 @@ public class WebDriverHelper {
      */
     public void close() {
         try {
-            connection.close();
             driver.close();
             driver.switchTo().alert().accept();
             driver.quit();
