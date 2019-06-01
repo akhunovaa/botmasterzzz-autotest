@@ -40,13 +40,7 @@ public class MainTestClass extends TestBase{
     public void createDriver() {
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-gpu");
         options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
         driver = new ChromeDriver(options);
     }
 
