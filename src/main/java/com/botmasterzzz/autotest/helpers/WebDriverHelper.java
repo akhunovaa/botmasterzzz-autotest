@@ -73,7 +73,11 @@ public class WebDriverHelper {
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         ChromeDriver driver = new ChromeDriver(options);
-
+        ChromeDriverService service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(chromeDriver)
+                .usingAnyFreePort()
+                .build();
+        service.start();
         return driver;
     }
 
