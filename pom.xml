@@ -32,7 +32,7 @@
         <aspectjweaver.version>1.9.4</aspectjweaver.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -103,10 +103,10 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <encoding>${maven-surefire-plugin.encoding}</encoding>
-                    <argLine>
-                        -javaagent:${settings.localRepository}\org\aspectj\aspectjweaver\${aspectjweaver.version}\aspectjweaver-${aspectjweaver.version}.jar
-                    </argLine>
+                    <!--<encoding>${maven-surefire-plugin.encoding}</encoding>-->
+                    <!--<argLine>-->
+                        <!-- -javaagent:${settings.localRepository}\org\aspectj\aspectjweaver\${aspectjweaver.version}\aspectjweaver-${aspectjweaver.version}.jar-->
+                    <!--</argLine>-->
                     <skip>false</skip>
                     <suiteXmlFiles>
                         <suiteXmlFile>${testng.xml.source}</suiteXmlFile>
