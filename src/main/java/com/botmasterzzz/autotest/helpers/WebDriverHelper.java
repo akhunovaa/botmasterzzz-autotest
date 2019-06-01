@@ -69,7 +69,6 @@ public class WebDriverHelper {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
         ChromeDriver driver = new ChromeDriver(options);
         ChromeDriverService service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(chromeDriver)
