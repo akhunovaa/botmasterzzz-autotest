@@ -18,7 +18,7 @@ public abstract class TestBase {
 
     @AfterClass
     protected void afterClass(){
-        driver.close();
+        applicationManager.stopAll();
     }
 
 }
