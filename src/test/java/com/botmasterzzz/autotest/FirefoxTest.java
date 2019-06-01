@@ -12,17 +12,17 @@ public class FirefoxTest {
 
     private WebDriver driver;
 
-    @BeforeClass
+    @BeforeTest
     public static void setupClass() {
         WebDriverManager.firefoxdriver().setup();
     }
 
-    @BeforeTest
+    @BeforeClass
     public void setupTest() {
         driver = new FirefoxDriver();
     }
 
-    @AfterTest
+    @AfterClass
     public void teardown() {
         if (driver != null) {
             driver.quit();

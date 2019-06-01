@@ -3,28 +3,25 @@ package com.botmasterzzz.autotest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MainTestClass extends TestBase{
+public class ChromeTest{
 
     private WebDriver driver;
 
-    @BeforeClass
+    @BeforeTest
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @BeforeTest
+    @BeforeClass
     public void setupTest() {
         driver = new ChromeDriver();
     }
 
-    @AfterTest
+    @AfterClass
     public void teardown() {
         if (driver != null) {
             driver.quit();
