@@ -8,7 +8,7 @@ public class MainTestClass extends TestBase{
 
     @Test
     public void step01(){
-        String title = "Botmasterzzz - Главный портал по сервису и поддержке искусственного интеллекта";
+        String title = "Botmasterzzz -Главный портал по сервису и поддержке искусственного интеллекта";
         driver.navigate().to("https://botmasterzzz.com");
         assertThat(String.format("Заголовок главной страницы не соответствует '%s'", title), title.equals(driver.getTitle()));
     }
