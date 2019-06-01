@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="MainSuite" verbose="5" >
+<suite name="MainSuite" verbose="10" >
     <test name="Main">
         <classes>
             <class name="com.botmasterzzz.autotest.MainTestClass"/>
