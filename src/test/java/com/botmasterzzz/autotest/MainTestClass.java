@@ -19,7 +19,7 @@ public class MainTestClass extends TestBase{
     private static ChromeDriverService service;
     private WebDriver driver;
 
-    @BeforeClass
+    @BeforeTest
     public static void createAndStartService() throws IOException {
         service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File("/usr/bin/chromedriver"))
@@ -28,18 +28,19 @@ public class MainTestClass extends TestBase{
         service.start();
     }
 
-    @AfterClass
+    @AfterTest
     public static void createAndStopService() {
         service.stop();
     }
 
-    @BeforeTest
+
+    @BeforeClass
     public void createDriver() {
         driver = new RemoteWebDriver(service.getUrl(),
                 DesiredCapabilities.chrome());
     }
 
-    @AfterTest
+    @AfterClass
     public void quitDriver() {
         driver.quit();
     }
