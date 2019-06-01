@@ -63,7 +63,7 @@ public class WebDriverHelper {
 //        System.setProperty("webdriver.chrome.driver", "src/test/resources/mac/chromedriver");
 //        File chromeDriver = new File("src/test/resources/mac/chromedriver");
         System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        File chromeDriver = new File("/usr/bin/chromedriver");
+        //File chromeDriver = new File("/usr/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("--disable-dev-shm-usage");
@@ -73,11 +73,6 @@ public class WebDriverHelper {
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         ChromeDriver driver = new ChromeDriver(options);
-        ChromeDriverService service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(chromeDriver)
-                .usingAnyFreePort()
-                .build();
-        service.start();
         return driver;
     }
 
