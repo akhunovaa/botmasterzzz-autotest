@@ -4,6 +4,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
@@ -61,7 +62,15 @@ public class WebDriverHelper {
     private ChromeDriver getChromeDriver() throws IOException {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/linux/chromedriver");
         File chromeDriver = new File("src/test/resources/linux/chromedriver");
-        ChromeDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.addArguments("disable-infobars");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        ChromeDriver driver = new ChromeDriver(options);
         ChromeDriverService service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(chromeDriver)
                 .usingAnyFreePort()
