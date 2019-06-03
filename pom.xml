@@ -54,7 +54,6 @@
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
             <scope>test</scope>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
