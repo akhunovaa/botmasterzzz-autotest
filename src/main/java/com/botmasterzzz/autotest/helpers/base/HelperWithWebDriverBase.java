@@ -21,18 +21,19 @@ import static org.hamcrest.core.IsNot.not;
 /**
  * Класс с базовым функционалом для работы с WebDriver, например открытие страницы, нахождение и действия над элементами, выполнение js и тд.
  */
-public class BaseHelperWithWebDriver {
+public class HelperWithWebDriverBase {
 
     protected final ApplicationManager app;
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseHelperWithWebDriver.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelperWithWebDriverBase.class);
     /**
      * Конструктор класса
      *
      * @param app Application Manager
      */
-    public BaseHelperWithWebDriver(ApplicationManager app) {
+    public HelperWithWebDriverBase(ApplicationManager app) {
        this.app = app;
+
     }
 
     /**
@@ -41,7 +42,7 @@ public class BaseHelperWithWebDriver {
      * @return WebDriver текущего потока
      */
     private WebDriver getDriver() {
-        return app.getWebDriver();
+        return app.getDriver();
     }
 
     /**
@@ -669,7 +670,7 @@ public class BaseHelperWithWebDriver {
         for (int i = 0; i < 100; i++) {
             Set<String> windows = getWindowHandles();
             if (windows.size() > 1) {
-                windows.remove(app.getMainWindow());
+                windows.remove(app.getHelperWebDriver().getMainWindow());
                 return windows.toArray()[0].toString();
             }
         }

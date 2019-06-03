@@ -1,5 +1,7 @@
 package com.botmasterzzz.autotest.helpers;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,14 @@ public class ApplicationManager {
     private HelperNavigation helperNavigation;
     private HelperWebDriver helperWebDriver;
     private HelperXPath helperXPath;
+
+    public WebDriver getDriver() {
+        return getHelperWebDriver().getDriver();
+    }
+
+    public Actions getActions() {
+        return getHelperWebDriver().getActions();
+    }
 
     public static ApplicationManager getInstance() {
         if (singleton == null) {
