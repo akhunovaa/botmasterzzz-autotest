@@ -1,101 +1,77 @@
 package com.botmasterzzz.autotest.helpers;
 
-import com.botmasterzzz.autotest.helpers.base.BaseHelperWithWebDriver;
+import com.botmasterzzz.autotest.xp.HelperXPath;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ApplicationManager{
+public class ApplicationManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationManager.class);
 
     private static ApplicationManager singleton;
-    private BaseHelperWithWebDriver baseActionWithWebDriver;
-    private List<WebDriverHelper> webDriverHelpers = new ArrayList<>();
-    private ThreadLocal<WebDriverHelper> webDriverHelper = new ThreadLocal<>();
+    private HelperClick helperClick;
+    private HelperDicts helperDicts;
+    private HelperGrid helperGrid;
+    private HelperNavigation helperNavigation;
+    private HelperWebDriver helperWebDriver;
+    private HelperXPath helperXPath;
+
+    public WebDriver getDriver() {
+        return getHelperWebDriver().getDriver();
+    }
+
+    public Actions getActions() {
+        return getHelperWebDriver().getActions();
+    }
 
     public static ApplicationManager getInstance() {
-        if (singleton == null)
+        if (singleton == null) {
             singleton = new ApplicationManager();
+        }
         return singleton;
     }
 
-    public static ApplicationManager getCurrentInstance() {
-        return singleton;
-    }
-
-    public WebDriverHelper getWebDriverHelper()
-    {
-        if (webDriverHelper.get() == null)
-        {
-            WebDriverHelper helper = new WebDriverHelper(this);
-            synchronized (webDriverHelpers)
-            {
-                webDriverHelpers.add(helper);
-            }
-            webDriverHelper.set(helper);
+    public HelperClick getHelperClick() {
+        if (helperClick == null) {
+            helperClick = new HelperClick(this);
         }
-        return webDriverHelper.get();
+        return helperClick;
     }
 
-
-    public NavigationHelper getNavigationHelper()
-    {
-        return new NavigationHelper();
-    }
-
-
-    /**
-     * Получаем driver текущего потока
-     *
-     * @return
-     */
-    public WebDriver getWebDriver()
-    {
-        return getWebDriverHelper().getDriver();
-    }
-
-
-    public String getMainWindow()
-    {
-        return getWebDriverHelper().getMainWindow();
-    }
-
-    public Actions getActions()
-    {
-        return getWebDriverHelper().getActions();
-    }
-
-
-    public BaseHelperWithWebDriver getBaseHelperWithWebDriver()
-    {
-        if (baseActionWithWebDriver == null)
-        {
-            baseActionWithWebDriver = new BaseHelperWithWebDriver(this);
+    public HelperDicts getHelperDicts() {
+        if (helperDicts == null) {
+            helperDicts = new HelperDicts(this);
         }
-        return baseActionWithWebDriver;
+        return helperDicts;
     }
-    /**
-     * Останавливаем все запущенные браузеры
-     */
-    public void stopAll()
-    {
-        synchronized (this)
-        {
-            for (WebDriverHelper helper: webDriverHelpers)
-            {
-                try {
-                    helper.close();
-                } catch (Exception e) {
-                    logger.error("Error when close browser", e);
-                }
-            }
-            webDriverHelpers.clear();
-            webDriverHelper = new ThreadLocal<>();
+
+    public HelperGrid getHelperGrid() {
+        if (helperGrid == null) {
+            helperGrid = new HelperGrid(this);
         }
+        return helperGrid;
+    }
+
+    public HelperNavigation getHelperNavigation() {
+        if (helperNavigation == null) {
+            helperNavigation = new HelperNavigation(this);
+        }
+        return helperNavigation;
+    }
+
+    public HelperWebDriver getHelperWebDriver() {
+        if (helperWebDriver == null) {
+            helperWebDriver = new HelperWebDriver(this);
+        }
+        return helperWebDriver;
+    }
+
+    public HelperXPath getHelperXPath() {
+        if (helperXPath == null) {
+            helperXPath = new HelperXPath(this);
+        }
+        return helperXPath;
     }
 }

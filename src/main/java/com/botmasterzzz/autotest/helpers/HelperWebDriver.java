@@ -5,8 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.UnreachableBrowserException;
+import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,15 +24,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Класс для инициалиизации и начала работы webdriver
  */
-public class WebDriverHelper {
+public class HelperWebDriver {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebDriverHelper.class);
-
-   private ApplicationManager applicationManager;
+    private static final Logger logger = LoggerFactory.getLogger(HelperWebDriver.class);
 
     private ApplicationManager app;
 
     private WebDriver driver;
+    private String baseUrl;
+    private boolean acceptNextAlert = true;
+    private StringBuffer verificationErrors = new StringBuffer();
     private String mainWindow;
     private Actions actions;
     private Connection connection;
@@ -39,46 +43,20 @@ public class WebDriverHelper {
      *
      * @param app ApplicationManager
      */
-    public WebDriverHelper(ApplicationManager app) {
+    public HelperWebDriver(ApplicationManager app) {
 
         this.app = app;
         try {
-            driver = this.getChromeDriver();
+//            driver = this.getChromeDriver();
+            driver = startDriver();
         } catch (IOException e) {
             logger.error("Could not catch the Chrome driver", e);
         }
+        logger.info("Browser starting... ");
 
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         maximizeWindow();
-    }
-
-
-    /**
-     * Получение chrome driver с настройками
-     *
-     * @return chrome driver с настройками
-     * @throws IOException
-     */
-    private ChromeDriver getChromeDriver() throws IOException {
-//        System.setProperty("webdriver.chrome.driver", "src/test/resources/mac/chromedriver");
-//        File chromeDriver = new File("src/test/resources/mac/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-        File chromeDriver = new File("/usr/bin/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("disable-infobars");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
-        ChromeDriver driver = new ChromeDriver(options);
-        ChromeDriverService service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(chromeDriver)
-                .usingAnyFreePort()
-                .build();
-        service.start();
-        return driver;
+        logger.info("done!");
     }
 
 
@@ -147,7 +125,7 @@ public class WebDriverHelper {
      * 2) Каталог для скачивания файлов.<br>
      * 3) Web-driver.<br>
      */
-    public void close() {
+    public void stop() {
         try {
             driver.close();
             driver.switchTo().alert().accept();
@@ -163,6 +141,34 @@ public class WebDriverHelper {
     }
 
     /**
+     *
+     * @return WebDriver по указанному в System.getenv("driver") типу
+     * @throws IOException
+     */
+    private WebDriver startDriver() throws IOException {
+//        for (String browser : System.getenv("browsers").split(", ")) {
+        WebDriver ldriver = initChromeDriver();
+        switch (System.getenv("browser")) {
+            case "CHROME":
+                ldriver = initChromeDriver();
+                break;
+            case "SAFARI":
+                ldriver = initSafariDriver();
+                break;
+            case "FIREFOX":
+                ldriver = initFirefoxDriver();
+                break;
+            case "IE":
+                ldriver = initIEDriver();
+                break;
+        }
+        ldriver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
+        ldriver.manage().window().maximize();
+        return ldriver;
+    }
+
+
+    /**
      * Получение connection с удаленным дебаггером
      *
      * @return Connection с удаленным дебаггером
@@ -171,4 +177,55 @@ public class WebDriverHelper {
         return connection;
     }
 
+
+    /**
+     * Получение chrome driver с настройками
+     *
+     * @return chrome driver с настройками
+     * @throws IOException
+     */
+    private WebDriver initChromeDriver() throws IOException {
+        WebDriver idriver;
+
+//        System.setProperty("webdriver.chrome.driver", "src/test/resources/mac/chromedriver");
+//        File chromeDriver = new File("src/test/resources/mac/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+        File chromeDriver = new File("/usr/bin/chromedriver");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("disable-infobars");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+//        ChromeDriver idr = new ChromeDriver(options);
+        idriver = new ChromeDriver(options);
+        ChromeDriverService service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(chromeDriver)
+                .usingAnyFreePort()
+                .build();
+        service.start();
+
+        return idriver;
+    }
+
+    private WebDriver initSafariDriver() {
+        WebDriver idriver = new SafariDriver();
+
+        return idriver;
+    }
+
+    private WebDriver initFirefoxDriver() {
+        WebDriver idriver = new FirefoxDriver();
+
+        return idriver;
+
+    }
+
+    private WebDriver initIEDriver() {
+        WebDriver idriver = new InternetExplorerDriver();
+
+        return idriver;
+    }
 }
