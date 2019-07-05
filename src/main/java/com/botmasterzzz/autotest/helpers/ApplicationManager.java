@@ -1,5 +1,6 @@
 package com.botmasterzzz.autotest.helpers;
 
+import com.botmasterzzz.autotest.xp.HelperXPath;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
